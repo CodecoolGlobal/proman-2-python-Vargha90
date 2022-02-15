@@ -9,7 +9,7 @@ export let boardsManager = {
         for (let board of boards) {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
-            domManager.addChild(".board-container", content);
+            domManager.addChild("#root", content);
             domManager.addEventListener(
                 `.board-toggle[data-board-id="${board.id}"]`,
                 "click",
@@ -22,16 +22,30 @@ export let boardsManager = {
 
 function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
-    if (clickEvent.target.classList.contains("closed")){
+    if (clickEvent.target.innerHTML == '<i class="fas fa-chevron-down"></i>'){
         cardsManager.loadCards(boardId);
-        clickEvent.target.classList.remove("closed");
-        clickEvent.target.classList.add("open");
+        loadColumns(boardId)
+        clickEvent.target.innerHTML = '<i class="fas fa-chevron-up"></i>';
     }
     else {
         cardsManager.hideCards(boardId);
-        clickEvent.target.classList.remove("open");
-        clickEvent.target.classList.add("closed");
+        clickEvent.target.innerHTML = '<i class="fas fa-chevron-down"></i>';
     }
 
 }
+
+async function loadColumns(boardId){
+    const statuses =  await dataHandler.getStatuses()
+    const board = document.querySelector(".column-container")
+    for (let status of statuses){
+        let text = document.createElement("div")
+        let element = document.createElement("div")
+        text.innerHTML = status.title
+        element.id = status.id
+        element.classList.add("column")
+        element.appendChild(text)
+        board.appendChild(element)
+    }
+}
+
 

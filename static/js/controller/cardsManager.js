@@ -8,17 +8,17 @@ export let cardsManager = {
         for (let card of cards) {
             const cardBuilder = htmlFactory(htmlTemplates.card);
             const content = cardBuilder(card);
-            domManager.addChild(`.board[data-board-id="${boardId}"]`, content);
-            /*domManager.addEventListener(
+            domManager.addChild(`.boardContent[data-board-id="${boardId}"]`, content);
+            domManager.addEventListener(
                 `.card[data-card-id="${card.id}"]`,
                 "click",
                 deleteButtonHandler
-            );*/
+            );
         }
     },
     hideCards: function (boardId){
-        let board = document.getElementById(`board_${boardId}`)
-        while (board.lastElementChild.className != "board-header") {
+        let board = document.getElementById(`${boardId}`)
+        while (board.lastElementChild) {
         board.removeChild(board.lastElementChild);
         }
     },
