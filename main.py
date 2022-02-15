@@ -25,11 +25,6 @@ def get_boards():
     return queries.get_boards()
 
 
-@app.route("/api/boards/statuses")
-@json_response
-def get_statuses():
-    return queries.get_all_status()
-
 @app.route("/api/boards/<int:board_id>/cards/")
 @json_response
 def get_cards_for_board(board_id: int):
@@ -43,11 +38,14 @@ def get_cards_for_board(board_id: int):
 @app.route("/api/statuses")
 @json_response
 def get_statuses():
-    """
-    All the boards
-    """
-    print(queries.get_statuses())
     return queries.get_statuses()
+
+
+@app.route("/receiver")
+@json_response
+def receiver():
+    return queries.update_board_title(boa)
+
 
 
 def main():

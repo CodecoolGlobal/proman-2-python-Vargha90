@@ -5,6 +5,7 @@ import {domManager} from "../view/domManager.js";
 export let cardsManager = {
     loadCards: async function (boardId) {
         const cards = await dataHandler.getCardsByBoardId(boardId);
+        const statuses =  await dataHandler.getStatuses()
         for (let i in statuses) {
             domManager.addChild(`.board-columns[data-board-id="${boardId}"]`,
                 `<div class="board-column">
