@@ -4,6 +4,7 @@ import {domManager} from "../view/domManager.js";
 
 export let cardsManager = {
     loadCards: async function (boardId) {
+        const statuses = await dataHandler.getStatuses();
         const cards = await dataHandler.getCardsByBoardId(boardId);
         for (let card of cards) {
             const cardBuilder = htmlFactory(htmlTemplates.card);

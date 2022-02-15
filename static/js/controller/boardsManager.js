@@ -21,13 +21,13 @@ export let boardsManager = {
 
 function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
-    if (clickEvent.target.innerHTML == 'Show Cards'){
+    if (clickEvent.target.innerHTML == '<i class="fas fa-chevron-down"></i>'){
         cardsManager.loadCards(boardId);
-        clickEvent.target.innerHTML = 'Hide Cards';
+        clickEvent.target.innerHTML = '<i class="fas fa-chevron-up"></i>';
     }
     else {
         cardsManager.hideCards(boardId);
-        clickEvent.target.innerHTML = 'Show Cards';
+        clickEvent.target.innerHTML = '<i class="fas fa-chevron-down"></i>';
     }
 
 }
