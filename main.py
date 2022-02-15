@@ -22,9 +22,13 @@ def get_boards():
     """
     All the boards
     """
-    print(queries.get_boards())
     return queries.get_boards()
 
+
+@app.route("/api/boards/statuses")
+@json_response
+def get_statuses():
+    return queries.get_all_status()
 
 @app.route("/api/boards/<int:board_id>/cards/")
 @json_response

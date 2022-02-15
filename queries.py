@@ -17,6 +17,14 @@ def get_card_status(status_id):
 
     return status
 
+def get_all_status():
+    return data_manager.execute_select(
+        """
+        SELECT * FROM statuses
+        ;
+        """
+    )
+
 
 def get_boards():
     return data_manager.execute_select(
