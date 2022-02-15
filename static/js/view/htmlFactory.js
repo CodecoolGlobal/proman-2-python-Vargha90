@@ -21,10 +21,14 @@ export function htmlFactory(template) {
 }
 
 function boardBuilder(board) {
-    return `<div class="board-container">
-                <div class="board" id=${board.id} data-board-id=${board.id}>${board.title}</div>
-                <button class="toggle-board-button" data-board-id="${board.id}">Show Cards</button>
-            </div>`;
+    return `
+        <section class="board" id=board_${board.id} data-board-id=${board.id}>
+        <div class="board-header"><span class="board-title">${board.title}</span>
+        <button class="board-add">Add Card</button>
+        <button class="board-toggle closed" id=button_${board.id} data-board-id="${board.id}"><i class="fas fa-chevron-down"></i></button>
+        </div>
+        </section>
+        `;
 }
 
 

@@ -9,9 +9,9 @@ export let boardsManager = {
         for (let board of boards) {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
-            domManager.addChild("#root", content);
+            domManager.addChild(".board-container", content);
             domManager.addEventListener(
-                `.toggle-board-button[data-board-id="${board.id}"]`,
+                `.board-toggle[data-board-id="${board.id}"]`,
                 "click",
                 showHideButtonHandler
             );
@@ -22,13 +22,16 @@ export let boardsManager = {
 
 function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
-    if (clickEvent.target.innerHTML == 'Show Cards'){
+    if (clickEvent.target.classList.contains("closed")){
         cardsManager.loadCards(boardId);
-        clickEvent.target.innerHTML = 'Hide Cards';
+        clickEvent.target.classList.remove("closed");
+        clickEvent.target.classList.add("open");
     }
     else {
         cardsManager.hideCards(boardId);
-        clickEvent.target.innerHTML = 'Show Cards';
+        clickEvent.target.classList.remove("open");
+        clickEvent.target.classList.add("closed");
     }
 
 }
+
