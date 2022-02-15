@@ -21,5 +21,13 @@ export let boardsManager = {
 
 function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
-    cardsManager.loadCards(boardId);
+    if (clickEvent.target.innerHTML == 'Show Cards'){
+        cardsManager.loadCards(boardId);
+        clickEvent.target.innerHTML = 'Hide Cards';
+    }
+    else {
+        cardsManager.hideCards(boardId);
+        clickEvent.target.innerHTML = 'Show Cards';
+    }
+
 }

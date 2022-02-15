@@ -16,7 +16,15 @@ export let cardsManager = {
             );
         }
     },
+    hideCards: function (boardId){
+        let board = document.getElementById(boardId)
+        while (board.lastElementChild) {
+        board.removeChild(board.lastElementChild);
+        }
+    },
 };
+
+
 
 function deleteButtonHandler(clickEvent) {
 }
