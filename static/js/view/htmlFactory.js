@@ -26,9 +26,10 @@ function boardBuilder(board) {
                     <button class="board-add">Add Card</button>
                     <button class="board-toggle toggle-board-button" data-board-id="${board.id}"><i class="fas fa-chevron-down"></i></button>
                 </div>
-                <div class="board-container" >
-                    <div class="column-container" data-board-id=${board.id}></div>
-                    <div class="boardContent" id=${board.id} data-board-id=${board.id}></div>
+                <div class="board-container">
+                    <div class="board" id=${board.id} data-board-id=${board.id}>
+                    <div class="board-columns" data-board-id=${board.id}></div>
+                    </div>
                 </div>
             </section>`;
     /*<section class="board">

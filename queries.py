@@ -45,3 +45,13 @@ def get_cards_for_board(board_id):
         , {"board_id": board_id})
 
     return matching_cards
+
+
+def get_statuses():
+    statuses_so_far = data_manager.execute_select(
+        """
+        SELECT * FROM statuses
+        ;
+        """)
+
+    return statuses_so_far
