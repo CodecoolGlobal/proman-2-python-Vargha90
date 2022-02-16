@@ -31,7 +31,32 @@ export let cardsManager = {
     },
 };
 
-
-
 function deleteButtonHandler(clickEvent) {
 }
+
+// Roland Drag 'N Drop
+
+const cards = document.querySelectorAll('.card');
+const containers = document.querySelectorAll('.board-column');
+
+
+cards.forEach(draggable => {
+    draggable.addEventListener('dragstart', () => {
+        console.log('DragStart')
+        draggable.classList.add('dragging')
+    })
+
+    draggable.addEventListener('dragend', () => {
+        console.log('DragEnd')
+        draggable.classList.remove('dragging')
+    })
+})
+
+containers.forEach(container => {
+    container.addEventListener('dragover', e => {
+        console.log('DragOver')
+        e.preventDefault()
+        const draggable = document.querySelector('.dragging')
+        container.appendChild(draggable)
+    })
+})
