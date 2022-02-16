@@ -16,6 +16,7 @@ def index():
     """
     return render_template('index.html')
 
+
 @app.route("/api/boards/new_board")
 @json_response
 def create_new_board():
