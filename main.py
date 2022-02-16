@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, request
 from dotenv import load_dotenv
-from util import json_response
+from util import json_response, hash_password, verify_password
 import mimetypes
 import queries
 

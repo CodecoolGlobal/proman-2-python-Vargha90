@@ -10,7 +10,7 @@ export let boardsManager = {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
             domManager.addChild("#root", content);
-            changeBoardTitle()
+            await changeBoardTitle()
             domManager.addEventListener(
             `.board-title[data-board-id="${board.id}"]`,
             "input",
@@ -28,14 +28,13 @@ export let boardsManager = {
 
 function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
-    if (clickEvent.target.innerHTML == '<i class="fas fa-chevron-down"></i>'){
+    if (clickEvent.target.innerText == 'ᐯ'){
         cardsManager.loadCards(boardId);
-        loadColumns(boardId)
-        clickEvent.target.innerHTML = '<i class="fas fa-chevron-up"></i>';
+        clickEvent.target.innerHTML = '&#5169;';
     }
     else {
         cardsManager.hideCards(boardId);
-        clickEvent.target.innerHTML = '<i class="fas fa-chevron-down"></i>';
+        clickEvent.target.innerHTML = 'ᐯ';
     }
 
 }

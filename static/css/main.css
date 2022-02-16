@@ -142,3 +142,8 @@ section.board{
     border: 3px solid black;
     background-color: grey;
 }
+
+
+.toggle-board-button{
+    font-weight: bolder;
+}
