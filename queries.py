@@ -17,6 +17,7 @@ def get_card_status(status_id):
 
     return status
 
+
 def get_all_status():
     return data_manager.execute_select(
         """
@@ -68,4 +69,14 @@ def update_board_title(board_id):
 
     return update_title
 
+
+def create_new_board(title):
+    data_manager.execute_cud(
+        """
+        INSERT INTO boards
+        (title)
+        VALUES (%(title)s)
+        """,
+        {"title": title}
+    )
 

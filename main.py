@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request
 from dotenv import load_dotenv
 from util import json_response, hash_password, verify_password
 import mimetypes
@@ -15,6 +15,14 @@ def index():
     This is a one-pager which shows all the boards and cards
     """
     return render_template('index.html')
+
+
+@app.route("/api/boards/new_board")
+@json_response
+def create_new_board():
+    print('ok')
+    # queries.create_new_board()
+    pass
 
 
 @app.route("/api/boards")
