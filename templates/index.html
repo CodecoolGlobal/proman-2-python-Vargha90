@@ -27,6 +27,17 @@
         <script type="module" src="{{ url_for('static', filename='js/main.js') }}" defer></script>
     </head>
     <body>
+    <nav>
+        <div class="navbar">
+            <ul class="navbar-list">
+                <li id="login-button">Login</li>
+                <li id="registration-button">Register</li>
+            </ul>
+        </div>
+        <div>
+            <span id="login-message">You are not logged in :(</span>
+        </div>
+    </nav>
     <h1>ProMan</h1>
 <button type="button"  data-toggle="modal" data-target="#exampleModalCenter">
   Create Board
