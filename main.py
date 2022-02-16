@@ -1,12 +1,13 @@
 from flask import Flask, render_template, url_for
 from dotenv import load_dotenv
-from util import json_response
+from util import json_response, hash_password, verify_password
 import mimetypes
 import queries
 
 mimetypes.add_type('application/javascript', '.js')
 app = Flask(__name__)
 load_dotenv()
+
 
 @app.route("/")
 def index():
@@ -22,7 +23,6 @@ def get_boards():
     """
     All the boards
     """
-    print(queries.get_boards())
     return queries.get_boards()
 
 
@@ -39,11 +39,13 @@ def get_cards_for_board(board_id: int):
 @app.route("/api/statuses")
 @json_response
 def get_statuses():
-    """
-    All the boards
-    """
-    print(queries.get_statuses())
     return queries.get_statuses()
+
+
+@app.route("/receiver")
+@json_response
+def receiver():
+    return queries.update_board_title(boa)
 
 
 def main():
