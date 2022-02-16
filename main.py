@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request
 from dotenv import load_dotenv
 from util import json_response
 import mimetypes
@@ -7,6 +7,7 @@ import queries
 mimetypes.add_type('application/javascript', '.js')
 app = Flask(__name__)
 load_dotenv()
+
 
 @app.route("/")
 def index():
@@ -45,7 +46,6 @@ def get_statuses():
 @json_response
 def receiver():
     return queries.update_board_title(boa)
-
 
 
 def main():

@@ -75,3 +75,7 @@ function saveBoardTitleChange(boardId) {
 
     }
 }
+
+function createNewBoard(){
+
+}
