@@ -34,10 +34,13 @@ export let cardsManager = {
 function deleteButtonHandler(clickEvent) {
 }
 
-// Roland Drag 'N Drop
+//                          Roland Drag 'N Drop
+
+//                          Method Test 1
+
 
 const cards = document.querySelectorAll('.card');
-const containers = document.querySelectorAll('.board-column');
+const containers = document.querySelectorAll('.board-column-content');
 
 
 cards.forEach(draggable => {
@@ -60,3 +63,99 @@ containers.forEach(container => {
         container.appendChild(draggable)
     })
 })
+// -------------------------------------------------------------//
+//                          Method Test 2
+
+
+const dom = {
+    isEmpty: function (el) {
+        return el.children.length === 0;
+    },
+    hasClass: function (el, cls) {
+        return el.classList.contains(cls);
+    },
+};
+
+const ui = {
+    cards : null,
+    slots : null,
+};
+
+const card = {
+    dragged: null,
+};
+
+
+function initDragAndDrop() {
+    initElements();
+    initDragEvents();
+}
+
+function initElements() {
+    ui.cards = document.querySelectorAll(".card");
+    ui.slots = document.querySelectorAll(".board-column-content");
+
+    ui.cards.forEach(function (card) {
+        card.setAttribute("draggable", true);
+    });
+}
+
+function initDragEvents() {
+    ui.cards.forEach(function (card) {
+        initDraggable(card);
+    });
+
+    ui.slots.forEach(function (slot) {
+        initDropzone(slot);
+    });
+}
+
+function initDraggable(draggable) {
+    draggable.setAttribute("draggable", true);
+    draggable.addEventListener("dragstart", handleDragStart);
+    draggable.addEventListener("dragend", handleDragEnd);
+}
+
+function initDropzone(dropzone) {
+    dropzone.addEventListener("dragenter", handleDragEnter);
+    dropzone.addEventListener("dragover", handleDragOver);
+    dropzone.addEventListener("dragleave", handleDragLeave);
+    dropzone.addEventListener("drop", handleDrop);
+}
+
+function handleDragStart(e) {
+    card.dragged = e.currentTarget;
+    console.log("Drag start of", card.dragged);
+}
+
+function handleDragEnd() {
+    console.log("Drag end of", card.dragged);
+    card.dragged = null;
+}
+
+function handleDragOver(e) {
+    e.preventDefault();
+}
+
+function handleDragEnter(e) {
+    console.log("Drag enter of", e.currentTarget);
+}
+
+function handleDragLeave(e) {
+    console.log("Drag leave of", e.currentTarget);
+}
+
+function handleDrop(e) {
+    e.preventDefault();
+    const dropzone = e.currentTarget;
+    console.log("Drop of", dropzone);
+
+    if (dom.hasClass(dropzone, "board-column-content")) {
+        if (dom.isEmpty(dropzone)) {
+            dropzone.appendChild(card.dragged);
+            return;
+        }
+    }
+}
+
+initDragAndDrop();
