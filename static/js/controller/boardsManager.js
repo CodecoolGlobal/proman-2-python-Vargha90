@@ -77,5 +77,5 @@ function saveBoardTitleChange(boardId) {
 }
 
 function createNewBoard(){
-
+domManager.addEventListener()
 }
