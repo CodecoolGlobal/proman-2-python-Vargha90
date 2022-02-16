@@ -78,9 +78,11 @@ function saveBoardTitleChange(boardId) {
 }
 
 function createNewBoard(){
-document.addEventListener('click', (e)=>{
-    const data = e.target
-    console.log(data)
-    })
+    const btn = document.getElementById('primary-button')
+btn.addEventListener('click', async (e) => {
+    const title = document.getElementById("board-title").value
+    console.log(title)
+    await dataHandler.createNewBoard(title)
 
+})
 }
