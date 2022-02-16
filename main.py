@@ -17,9 +17,10 @@ def index():
     return render_template('index.html')
 
 
-@app.route("/api/boards/new_board")
+@app.route("/api/boards/new_board", methods= ['POST'])
 @json_response
 def create_new_board():
+    queries.create_new_board()
     pass
 
 

@@ -5,6 +5,7 @@ import {cardsManager} from "./cardsManager.js";
 
 export let boardsManager = {
     loadBoards: async function () {
+        domManager.addEventListener(".create-board-button","click", createNewBoard)
         const boards = await dataHandler.getBoards();
         for (let board of boards) {
             const boardBuilder = htmlFactory(htmlTemplates.board);
@@ -21,6 +22,7 @@ export let boardsManager = {
                 "click",
                 showHideButtonHandler
             );
+            domManager.addEventListener()
         }
     },
 };
@@ -76,5 +78,9 @@ function saveBoardTitleChange(boardId) {
 }
 
 function createNewBoard(){
-domManager.addEventListener()
+document.addEventListener('click', (e)=>{
+    const data = e.target
+    console.log(data)
+    })
+
 }
