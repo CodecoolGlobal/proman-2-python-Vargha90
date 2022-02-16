@@ -147,3 +147,28 @@ section.board{
 .toggle-board-button{
     font-weight: bolder;
 }
+
+nav {
+    background-color: white;
+    width: 100%;
+}
+
+.navbar {
+    width: 80%;
+}
+
+nav div {
+    display: inline-block;
+}
+
+.navbar-list {
+    list-style-type: none;
+    margin-left: 5%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+nav div ul li {
+    display: inline-block;
+    padding-right: 15px;
+}
