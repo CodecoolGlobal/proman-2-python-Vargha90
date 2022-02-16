@@ -22,15 +22,14 @@ export let boardsManager = {
                 "click",
                 showHideButtonHandler
             );
-            domManager.addEventListener()
+            // domManager.addEventListener()
         }
     },
 };
 
-
 function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
-    if (clickEvent.target.innerText == 'ᐯ'){
+    if (clickEvent.target.innerText === 'ᐯ'){
         cardsManager.loadCards(boardId);
         clickEvent.target.innerHTML = '&#5169;';
     }
