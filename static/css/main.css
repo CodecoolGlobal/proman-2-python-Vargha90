@@ -127,3 +127,7 @@ section.board{
 .card-title{
     padding-right: 16px;
 }
+
+.toggle-board-button{
+    font-weight: bolder;
+}
