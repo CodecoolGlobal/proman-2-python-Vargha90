@@ -33,7 +33,7 @@ CREATE TABLE statuses (
 
 CREATE TABLE boards (
     	id          	SERIAL PRIMARY KEY  	NOT NULL,
-    	user_id	INTEGER		NOT NULL,
+    	user_id	INTEGER		,
     	title       	VARCHAR(200)        	NOT NULL
 );
 

@@ -27,7 +27,8 @@ export let boardsManager = {
         }
     },
     initClick: async function () {
-        domManager.addEventListener(".create-board-button","click", createNewBoard)
+        // domManager.addEventListener(".create-board-button","click", createNewBoard)
+        domManager.addEventListener('#primary-button','click', createNewBoard)
     }
 };
 
@@ -111,18 +112,14 @@ function createSaveButton(){
     return saveButton
 }
 
-function createNewBoard(){
-    const btn = document.getElementById('primary-button')
-    btn.addEventListener('click', async (e) => {
+async function createNewBoard(){
     const title = document.getElementById("board-title").value
     await dataHandler.createNewBoard(title).then(r => {return console.log(r)})
         boardsManager.loadBoards()
-})
+
 }
 
 function clearBoards(){
     const boards = document.querySelector(".board-container #root")
-if (boards.hasChildNodes()){
-
-}
+    boards.innerHTML = ""
 }
