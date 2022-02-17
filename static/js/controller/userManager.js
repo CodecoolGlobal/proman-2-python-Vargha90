@@ -2,45 +2,51 @@ export function loginRegister() {
     const loginButton = document.querySelector('#login-button');
     const registerButton = document.querySelector('#registration-button');
     loginButton.addEventListener('click', () => {
-        showModal('Login', false);
+        showModal('Login', false, 'loginModal', 'loginModalTitle');
     })
     registerButton.addEventListener('click', () => {
-        showModal('Registration', true);
+        showModal('Registration', true, 'registerModal', 'registerModalTitle');
     })
 }
 
-function showModal(modalTitle, register) {
+function showModal(modalTitle, register, modalBoard, title) {
     let body = document.querySelector('body');
     const modal = document.createElement("div");
-    modal.classList.add("modal");
+    modal.classList.add("modal", "fade");
+    modal.setAttribute("id", modalBoard);
+    modal.setAttribute("tabIndex", "-1");
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-labelledby", title);
+    modal.setAttribute("aria-hidden", "true");
     modal.innerHTML = `
-        <div class="inner-modal">
-            <div class="modal-header">
-                <h3 class="modal-title" id="modalTitle">${modalTitle}</h3>
-                <button class="close-modal" type="button">
-                    <span class="material-icons">close</span>
-                </button>
-            </div>
-            <div class="modal-body"></div>
-                <form action="#" method="post" class="submit-form">
-                    <div class="form-group">
-                        <label for="enter-username" class="username-label">
-                            Enter your username:
-                        </label>
-                        <input type="text" class="form-control" name="username-form" id="enter-username"
-                               placeholder="John">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id=${title}>${modalTitle}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeIcon">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <div class="form-group">
-                        <label for="enter-password" class="password-label">
-                            Enter your password:
-                        </label>
-                        <input type="password" class="form-control" name="password-form" id="enter-password">
-                    </div>
-                    <button type="submit" class="submit-button">Submit</button>
-                </form>
+                    <form action="#" method="post">
+                        <div class="modal-body">
+                            <label for="username">Username:</label>
+                            <input id="username" type="text" minLength="1" placeholder="John" name="username-field"><br>
+                            <label for="password">Password:</label>
+                            <input id="password" type="password" name="password-field">
+                        </div>
+                        <div class="modal-footer">
+                            <button id="closeButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="primary-button" data-dismiss="modal">Submit</button>
+                        </div>
+                    </form>
+                </div>
             </div>`;
     body.appendChild(modal);
-    const closeButton = document.querySelector('.close-modal');
+    const closeIcon = document.querySelector('#closeIcon');
+    const closeButton = document.querySelector('#closeButton');
+    closeIcon.addEventListener('click', () => {
+        body.removeChild(modal);
+    })
     closeButton.addEventListener('click', () => {
         body.removeChild(modal);
     })
