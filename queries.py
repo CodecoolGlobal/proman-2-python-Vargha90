@@ -31,6 +31,7 @@ def get_boards():
     return data_manager.execute_select(
         """
         SELECT * FROM boards
+        ORDER BY id
         ;
         """
     )
@@ -58,17 +59,12 @@ def get_statuses():
     return statuses_so_far
 
 
-def update_board_title(board_id):
-    update_title = data_manager.execute_select(
-        """
+def update_board_title(board_id, new_title):
+    data_manager.execute_cud(f"""
         UPDATE boards
-        SET title = %(board_id)s
-        WHERE id == %(board_id)s;
-        """
-        , {"board_id": board_id})
-
-    return update_title
-
+        SET title = '{new_title}'
+        WHERE id = '{board_id}';
+        """)
 
 def create_new_board(title):
     data_manager.execute_cud(

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, redirect
 from dotenv import load_dotenv
 from util import json_response, hash_password, verify_password
 import mimetypes
@@ -50,10 +50,10 @@ def get_statuses():
     return queries.get_statuses()
 
 
-@app.route("/receiver")
-@json_response
-def receiver():
-    return queries.update_board_title(boa)
+@app.route("/change_board_title/<int:board_id>/<new_title>", methods=["POST"])
+def change_board_title(board_id, new_title):
+    queries.update_board_title(board_id, new_title)
+    return redirect("/")
 
 
 def main():

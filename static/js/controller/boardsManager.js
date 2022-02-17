@@ -22,7 +22,7 @@ export let boardsManager = {
                 "click",
                 showHideButtonHandler
             );
-            // domManager.addEventListener()
+            //domManager.addEventListener()
         }
     },
 };
@@ -62,18 +62,38 @@ export async function changeBoardTitle(){
 }
 
 function saveBoardTitleChange(boardId) {
-    if (document.querySelector(".saveButton") == null){
-        let saveButton = document.createElement("button")
-        let board = document.querySelector(`.board-header[data-board-id="${boardId}"]`)
-        saveButton.classList.add("saveButton")
-        saveButton.innerHTML = "Save"
-        console.log(saveButton)
-        board.appendChild(saveButton)
-        saveButton.addEventListener("click",()=>{
-            //coming soon
-        })
+     if(document.body.contains(document.querySelector('.saveButton'))){
+         deleteExistingForm()
+     }
+    let board = document.querySelector(`.board-header[data-board-id="${boardId}"]`)
+    let newTitle = document.querySelector(`.board-title[data-board-id="${boardId}"]`).innerHTML
+    let form = createFormForBoardTitle(boardId,newTitle)
+    let saveButton = createSaveButton()
+    form.appendChild(saveButton)
+    board.appendChild(form)
+}
 
-    }
+function deleteExistingForm(){
+    let saveButton = document.querySelector(".saveButton")
+    let form = document.querySelector(".boardTitleForm")
+    saveButton.remove()
+    form.remove()
+}
+
+function createFormForBoardTitle(board,title){
+    let form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", `/change_board_title/${board}/${title}`)
+    form.style.display = "inline"
+    form.classList.add("boardTitleForm")
+    return form
+};
+
+function createSaveButton(){
+    let saveButton = document.createElement("button")
+    saveButton.classList.add("saveButton")
+    saveButton.innerHTML = "Save"
+    return saveButton
 }
 
 function createNewBoard(){
