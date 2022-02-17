@@ -12,7 +12,7 @@ export let boardsManager = {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
             domManager.addChild("#root", content);
-            await changeBoardTitle()
+            await allowBoardTitleChange()
             domManager.addEventListener(
             `.board-title[data-board-id="${board.id}"]`,
             "input",
@@ -65,7 +65,7 @@ async function loadColumns(boardId){
     }
 }
 
-export async function changeBoardTitle(){
+export async function allowBoardTitleChange(){
     const boardTitles = document.querySelectorAll(".board-title")
     for(let boardTitle of boardTitles){
         boardTitle.contentEditable = 'true'

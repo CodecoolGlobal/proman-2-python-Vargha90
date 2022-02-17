@@ -118,7 +118,7 @@ function boardBuilder(board) {
 }
 
 function cardBuilder(card) {
-    return`<div class="card" draggable="true" data-card-id="${card.id}">${card.title}</div>`;
+    return`<div class="card" card-column="${card.status_id}" draggable="true" data-card-id="${card.id}">${card.title}</div>`;
 
 }
 
