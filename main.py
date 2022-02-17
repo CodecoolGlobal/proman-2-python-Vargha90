@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, jsonify
 from dotenv import load_dotenv
 from util import json_response, hash_password, verify_password
 import mimetypes
@@ -17,12 +17,13 @@ def index():
     return render_template('index.html')
 
 
-@app.route("/api/boards/new_board")
+@app.route("/api/boards/new_board", methods=['POST'])
 @json_response
 def create_new_board():
-    print('ok')
-    # queries.create_new_board()
-    pass
+    title = request.form['board-title']
+    queries.create_new_board(title)
+    response = {'status': 'ok'}
+    return response
 
 
 @app.route("/api/boards")
@@ -51,9 +52,10 @@ def get_statuses():
 
 
 @app.route("/change_board_title/<int:board_id>/<new_title>", methods=["POST"])
+@json_response
 def change_board_title(board_id, new_title):
     queries.update_board_title(board_id, new_title)
-    return redirect("/")
+    return jsonify("", render_template("new_title_model.html"), new_title=new_title)
 
 
 def main():

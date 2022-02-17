@@ -22,8 +22,7 @@ export function htmlFactory(template) {
 
 function boardBuilder(board) {
     return `<section class="board">
-                <div class="board-header" data-board-id="${board.id}"><span class="board-title" data-board-id="${board.id}">${board.title}</span>
-                    <button class="board-add">Add Card</button>
+                <div class="board-header" data-board-id="${board.id}"><span id="board-title" class="board-title" data-board-id="${board.id}">${board.title}</span>
                     <button class="board-toggle toggle-board-button" data-board-id="${board.id}">&#5167;</button>
                 </div>
                 <div class="board-container">
@@ -120,5 +119,11 @@ function boardBuilder(board) {
 
 function cardBuilder(card) {
     return`<div class="card" draggable="true" data-card-id="${card.id}">${card.title}</div>`;
+
+}
+
+export function addColumnButton(){
+    return`<button class="board-add" id="add-card">Add Card</button>
+<button class="board-add" id="add-column">Add Column</button>`;
 
 }

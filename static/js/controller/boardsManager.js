@@ -1,5 +1,5 @@
 import {dataHandler} from "../data/dataHandler.js";
-import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
+import {htmlFactory, htmlTemplates, addColumnButton} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 import {cardsManager} from "./cardsManager.js";
 
@@ -31,10 +31,16 @@ function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
     if (clickEvent.target.innerText === 'ᐯ'){
         cardsManager.loadCards(boardId);
+        const column = addColumnButton()
+        const list = document.querySelector(".board-header")
+        clickEvent.target.insertAdjacentHTML('afterend', column)
+        console.log(list)
         clickEvent.target.innerHTML = '&#5169;';
     }
     else {
         cardsManager.hideCards(boardId);
+        document.getElementById('add-column').remove()
+        document.getElementById('add-card').remove()
         clickEvent.target.innerHTML = 'ᐯ';
     }
 
@@ -63,31 +69,36 @@ export async function changeBoardTitle(){
 
 function saveBoardTitleChange(boardId) {
      if(document.body.contains(document.querySelector('.saveButton'))){
-         deleteExistingForm()
+         deleteExistingButton()
      }
     let board = document.querySelector(`.board-header[data-board-id="${boardId}"]`)
     let newTitle = document.querySelector(`.board-title[data-board-id="${boardId}"]`).innerHTML
-    let form = createFormForBoardTitle(boardId,newTitle)
     let saveButton = createSaveButton()
-    form.appendChild(saveButton)
-    board.appendChild(form)
+    board.appendChild(saveButton)
+    saveButton.addEventListener("click",()=>{
+        changeTitleAjax(boardId, newTitle)
+    })
 }
 
-function deleteExistingForm(){
+
+function changeTitleAjax(boardId, newTitle){
+            $.ajax({
+            url: `/change_board_title/${boardId}/${newTitle}`,
+            type: "POST",
+            dataType: "Json",
+            success: function (data){
+                $(board-title).replace(data)
+            }
+            });
+        deleteExistingButton()
+}
+
+
+function deleteExistingButton(){
     let saveButton = document.querySelector(".saveButton")
-    let form = document.querySelector(".boardTitleForm")
     saveButton.remove()
-    form.remove()
 }
 
-function createFormForBoardTitle(board,title){
-    let form = document.createElement("form");
-    form.setAttribute("method", "post");
-    form.setAttribute("action", `/change_board_title/${board}/${title}`)
-    form.style.display = "inline"
-    form.classList.add("boardTitleForm")
-    return form
-};
 
 function createSaveButton(){
     let saveButton = document.createElement("button")
@@ -98,10 +109,9 @@ function createSaveButton(){
 
 function createNewBoard(){
     const btn = document.getElementById('primary-button')
-btn.addEventListener('click', async (e) => {
+    btn.addEventListener('submit', async (e) => {
     const title = document.getElementById("board-title").value
     console.log(title)
     await dataHandler.createNewBoard(title)
-
 })
 }
