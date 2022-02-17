@@ -10,24 +10,26 @@ export let cardsManager = {
             domManager.addChild(`.board-columns[data-board-id="${boardId}"]`,
                 `<div class="board-column">
                             <div class="board-column-title">${statuses[i]['title']}</div>
-                            <div class="board-column-content" something="${boardId}/${parseInt(i) +1}"></div></div>`)
+                            <div class="board-column-content" something="${boardId}/${parseInt(i) +1}" column="${parseInt(i) +1}"></div></div>`)
         }
         for (let card of cards) {
             const cardBuilder = htmlFactory(htmlTemplates.card);
             const content = cardBuilder(card);
-            domManager.addChild(`.board-column-content[something="${boardId}/${card['status_id']}"]`, content);
+            domManager.addChild(`.board-column-content[something="${boardId}/${card['status_id']}"]` , content);
             domManager.addEventListener(
                 `.card[data-card-id="${card.id}"]`,
                 "click",
                 deleteButtonHandler
             );
         }
+        dragAndDrop()
     },
     hideCards: function (boardId){
         let board = document.getElementsByClassName("board-columns")[boardId-1]
         while (board.lastElementChild) {
         board.removeChild(board.lastElementChild);
         }
+
     },
 };
 
@@ -38,31 +40,28 @@ function deleteButtonHandler(clickEvent) {
 
 //                          Method Test 1
 
+function dragAndDrop(){
+    const cards = document.querySelectorAll('.card');
+    const containers = document.querySelectorAll('.board-column-content');
+    cards.forEach(draggable => {
+        draggable.addEventListener('dragstart', () => {
+            draggable.classList.add('dragging')
+        })
 
-const cards = document.querySelectorAll('.card');
-const containers = document.querySelectorAll('.board-column-content');
-
-
-cards.forEach(draggable => {
-    draggable.addEventListener('dragstart', () => {
-        console.log('DragStart')
-        draggable.classList.add('dragging')
+        draggable.addEventListener('dragend', () => {
+            draggable.classList.remove('dragging')
+        })
     })
 
-    draggable.addEventListener('dragend', () => {
-        console.log('DragEnd')
-        draggable.classList.remove('dragging')
+    containers.forEach(container => {
+        container.addEventListener('dragover', e => {
+            e.preventDefault()
+            const draggable = document.querySelector('.dragging')
+            container.appendChild(draggable)
+        })
     })
-})
+    }
 
-containers.forEach(container => {
-    container.addEventListener('dragover', e => {
-        console.log('DragOver')
-        e.preventDefault()
-        const draggable = document.querySelector('.dragging')
-        container.appendChild(draggable)
-    })
-})
 // -------------------------------------------------------------//
 //                          Method Test 2
 
