@@ -37,7 +37,7 @@ function deleteButtonHandler(clickEvent) {
 
 function DragAndDrop() {
     const cards = document.querySelectorAll('.card');
-    const containers = document.querySelectorAll('.board-column');
+    const containers = document.querySelectorAll('.board-column-content');
     console.log(cards);
     console.log(containers);
 
