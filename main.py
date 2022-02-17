@@ -31,13 +31,18 @@ def login():
     user_data = queries.get_user_data_by_username(username)
     if len(user_data) > 0:
         if username == user_data[0]['username'] and util.verify_password(password, user_data[0]['password']):
-            session['logged_in'] = True
             session['username'] = username
             session['user_id'] = str(user_data[0]['id'])
+            logged_data = {'logged': '1',
+                           'username': username,
+                           'user_id': session['user_id']}
+            return logged_data
         else:
-            print('wrong password')
+            logged_data = {'logged': '0'}
+            return logged_data
     else:
-        print('wrong username')
+        logged_data = {'logged': '0'}
+        return logged_data
 
 
 @app.route("/api/register", methods=['POST'])
@@ -104,7 +109,6 @@ def main():
     # Serving the favicon
     with app.app_context():
         app.add_url_rule('/favicon.ico', redirect_to=url_for('static', filename='favicon/favicon.ico'))
-
 
 
 if __name__ == '__main__':

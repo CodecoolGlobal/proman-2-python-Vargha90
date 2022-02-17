@@ -68,7 +68,9 @@ async function loginUser() {
         'username': document.querySelector('#username').value,
         'password': document.querySelector('#password').value
     }
-    await dataHandler.login(data);
+    const response = await dataHandler.login(data)
+    console.log(response)
+
 }
 
 async function registerUser() {
