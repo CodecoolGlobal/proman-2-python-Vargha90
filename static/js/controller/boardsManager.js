@@ -12,7 +12,6 @@ export let boardsManager = {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
             domManager.addChild("#root", content);
-            await allowBoardTitleChange()
             domManager.addEventListener(
             `.board-title[data-board-id="${board.id}"]`,
             "input",
@@ -65,17 +64,24 @@ async function loadColumns(boardId){
     }
 }
 
-export async function allowBoardTitleChange(){
-    const boardTitles = document.querySelectorAll(".board-title")
-    for(let boardTitle of boardTitles){
-        boardTitle.contentEditable = 'true'
-    }
+
+function limitTitleLength(boardId){
+    let boardTitle = document.querySelector(`.board-title[data-board-id="${boardId}"]`)
+     $(boardTitle).on("keypress paste", function (e) {
+         console.log(boardTitle.getAttribute("max"))
+        if (boardTitle.innerHTML.length >= boardTitle.getAttribute("max")) {
+            e.preventDefault();
+            return false;
+        }
+    });
 }
+
 
 function saveBoardTitleChange(boardId) {
      if(document.body.contains(document.querySelector('.saveButton'))){
          deleteExistingButton()
      }
+    limitTitleLength(boardId)
     let board = document.querySelector(`.board-header[data-board-id="${boardId}"]`)
     let newTitle = document.querySelector(`.board-title[data-board-id="${boardId}"]`).innerHTML
     let saveButton = createSaveButton()
