@@ -2,8 +2,9 @@ import {boardsManager} from "./controller/boardsManager.js";
 import {loginRegister} from "./controller/userManager.js"
 
 function init() {
-    boardsManager.initClick()
+    boardsManager.boardButton()
     boardsManager.loadBoards();
+    // boardsManager.cardButton()
     // loginRegister();
 }
 

@@ -88,6 +88,16 @@ def create_new_board():
     return response
 
 
+@app.route("/api/boards/<int:boardId>/cards/new-card", methods=['POST'])
+@json_response
+def create_new_card(boardId):
+    data = request.get_json()
+    title = data['cardTitle']
+    status = data['statusId']
+    queries.create_new_card(boardId, status, title)
+    return {'status': 'ok'}
+
+
 @app.route("/api/boards")
 @json_response
 def get_boards():

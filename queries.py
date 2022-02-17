@@ -75,14 +75,12 @@ def update_card_column(board_id, card_column_id, card_id):
         """)
 
 
-
 def update_card_title(card_id, new_title):
     data_manager.execute_cud(f"""
         UPDATE cards
         SET title = '{new_title}'
         WHERE id = '{card_id}';
         """)
-
 
 
 def create_new_board(title):
@@ -93,6 +91,22 @@ def create_new_board(title):
         VALUES (%(title)s)
         """,
         {"title": title}
+    )
+
+
+def create_new_card(board_id, status_id, title):
+    data_manager.execute_cud(
+        """
+        INSERT INTO cards
+        (board_id, status_id, title) 
+        VALUES (
+        %(board_id)s,
+        %(status_id)s,
+        %(title)s)
+        """,
+        {"board_id": board_id,
+         "status_id": status_id,
+         "title": title}
     )
 
 

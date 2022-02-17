@@ -6,7 +6,6 @@ import {loginRegister} from "./userManager.js";
 
 export let boardsManager = {
     loadBoards: async function () {
-        // refresh
         let loggedData = await dataHandler.getLoggedStatus();
         loginRegister(loggedData);
         clearBoards();
@@ -28,21 +27,23 @@ export let boardsManager = {
             //domManager.addEventListener()
         }
     },
-    initClick: async function () {
-        // domManager.addEventListener(".create-board-button","click", createNewBoard)
+    boardButton: async function () {
         domManager.addEventListener('#primary-button','click', createNewBoard)
-    }
+    },
+
+
 };
 
-function showHideButtonHandler(clickEvent) {
+ function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
     if (clickEvent.target.innerText === 'ᐯ'){
         cardsManager.loadCards(boardId);
         const column = addColumnButton()
         const list = document.querySelector(".board-header")
         clickEvent.target.insertAdjacentHTML('afterend', column)
-        console.log(list)
         clickEvent.target.innerHTML = '&#5169;';
+        const btn = document.getElementById('add-card')
+         btn.addEventListener( 'click', createCard)
     }
     else {
         cardsManager.hideCards(boardId);
@@ -132,3 +133,13 @@ function clearBoards(){
     const boards = document.querySelector(".board-container #root")
     boards.innerHTML = ""
 }
+
+async function createCard(event){
+     const divTarget = event.target.parentNode.nextSibling.nextSibling.childNodes[1]
+    const id = divTarget.getAttribute('data-board-id')
+    const title = window.prompt()
+    const newStatusId = 1
+    await dataHandler.createNewCard(title, id, newStatusId)
+
+    }
+
