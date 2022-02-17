@@ -22,6 +22,22 @@ def index():
     return render_template('index.html')
 
 
+@app.route("/api/logged")
+@json_response
+def if_logged():
+    if session:
+        username = session['username']
+        user_id = session['user_id']
+        logged_data = {'username': username,
+                       'user_id': user_id,
+                       'logged': 'True'}
+        return logged_data
+    else:
+        session.clear()
+        logged_data = {'logged': 'False'}
+        return logged_data
+
+
 @app.route("/api/login", methods=['POST'])
 @json_response
 def login():

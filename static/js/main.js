@@ -4,7 +4,7 @@ import {loginRegister} from "./controller/userManager.js"
 function init() {
     boardsManager.initClick()
     boardsManager.loadBoards();
-    loginRegister();
+    // loginRegister();
 }
 
 init();

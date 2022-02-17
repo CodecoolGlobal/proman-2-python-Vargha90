@@ -1,6 +1,7 @@
 import {dataHandler} from "../data/dataHandler.js";
 
-export function loginRegister() {
+export function loginRegister(loggedData) {
+    console.log(loggedData.username)
     const loginButton = document.querySelector('#login-button');
     const registerButton = document.querySelector('#registration-button');
     loginButton.addEventListener('click', loginEvent)

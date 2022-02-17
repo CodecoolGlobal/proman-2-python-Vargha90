@@ -34,6 +34,9 @@ export let dataHandler = {
     },
     logout: async function () {
         return await apiGet("/api/logout")
+    },
+    getLoggedStatus: async function () {
+        return await apiGet("/api/logged")
     }
 };
 
