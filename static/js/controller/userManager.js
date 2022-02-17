@@ -31,18 +31,16 @@ function showModal(modalTitle, register, modalBoard, title) {
                           <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-<!--                    <form action="/api/login" method="post">-->
-                        <div class="modal-body">
-                            <label for="username">Username:</label>
-                            <input id="username" type="text" minLength="1" placeholder="John" name="username-field"><br>
-                            <label for="password">Password:</label>
-                            <input id="password" type="password" name="password-field">
-                        </div>
-                        <div class="modal-footer">
-                            <button id="closeButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="submitButton" data-dismiss="modal">Submit</button>
-                        </div>
-<!--                    </form>-->
+                    <div class="modal-body">
+                        <label for="username">Username:</label>
+                        <input id="username" type="text" minLength="1" placeholder="John" name="username-field"><br>
+                        <label for="password">Password:</label>
+                        <input id="password" type="password" name="password-field">
+                    </div>
+                    <div class="modal-footer">
+                        <button id="closeButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="submitButton" data-dismiss="modal">Submit</button>
+                    </div>
                 </div>
             </div>`;
     body.appendChild(modal);
