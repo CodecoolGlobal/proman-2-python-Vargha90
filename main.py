@@ -65,6 +65,13 @@ def save_drag_changes(board_id, card_column_id, card_id):
     queries.update_card_column(board_id, card_column_id, card_id)
 
 
+@app.route("/change_card_title/<card_id>/<new_title>", methods=["POST"])
+@json_response
+def change_card_title(card_id, new_title):
+    queries.update_card_title(card_id, new_title)
+    return jsonify("", render_template("new_card_title_model.html"), new_title=new_title)
+
+
 def main():
     app.run(debug=True)
 

@@ -16,6 +16,7 @@ export let cardsManager = {
             const cardBuilder = htmlFactory(htmlTemplates.card);
             const content = cardBuilder(card);
             domManager.addChild(`.board-column-content[something="${boardId}/${card['status_id']}"]` , content);
+            changeCardTitle(card.id)
             domManager.addEventListener(
                 `.card[data-card-id="${card.id}"]`,
                 "click",
@@ -81,5 +82,54 @@ function dragChangesAjax(board_id, card_column_id, card_id){
             url: `/save_drag_changes/${board_id}/${card_column_id}/${card_id}`,
             type: "POST",
             dataType: "Json",
+            });
+}
+function changeCardTitle(cardId){
+    let card = document.querySelector(`.card[data-card-id="${cardId}"]`)
+    let base_value = card.innerText
+    $(card).on('keydown', function (event) {
+    if (event.keyCode === 13) {
+        onEnter(event, card, cardId)
+        base_value = card.innerText
+    }
+    else if(event.keyCode === 27){
+        onEscape(card, base_value)
+    }
+    detectClickOutside(card, base_value)
+   });
+}
+
+function onEnter(event, card, cardId){
+    event.preventDefault();
+    card.blur()
+    card.classList.add("changed")
+    changeCardTitleAjax(cardId, card.innerText)
+}
+
+function onEscape(card, base_value){
+    card.blur()
+    card.innerText =  base_value
+}
+
+function detectClickOutside(card, base_value){
+    jQuery(function($){
+        $(card).click(function(e){
+        e.stopPropagation();
+        });
+    $(document).click(function() {
+        card.blur()
+        card.innerText =  base_value
+      });
+    });
+}
+
+function changeCardTitleAjax(card_id, new_title){
+            $.ajax({
+            url: `/change_card_title/${card_id}/${new_title}`,
+            type: "POST",
+            dataType: "Json",
+            success: function (data){
+                $(card).replace(data)
+            }
             });
 }
