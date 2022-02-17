@@ -59,6 +59,7 @@ function DragAndDrop()  {
             const draggable = document.querySelector('.dragging')
             container.appendChild(draggable)
             changeColumnAttr(container, draggable)
+            saveDragChanges(container, draggable)
         })
     })
 }
@@ -66,4 +67,19 @@ function DragAndDrop()  {
 function changeColumnAttr(container, draggable){
     let column = container.getAttribute("column")
     draggable.setAttribute("card-column", column)
+}
+
+function saveDragChanges(container, draggable){
+    const cardColumnId = draggable.getAttribute("card-column")
+    const boardId = container.parentElement.parentElement.getAttribute("data-board-id")
+    const cardId = draggable.getAttribute("data-card-id")
+    dragChangesAjax(boardId, cardColumnId, cardId)
+}
+
+function dragChangesAjax(board_id, card_column_id, card_id){
+            $.ajax({
+            url: `/save_drag_changes/${board_id}/${card_column_id}/${card_id}`,
+            type: "POST",
+            dataType: "Json",
+            });
 }

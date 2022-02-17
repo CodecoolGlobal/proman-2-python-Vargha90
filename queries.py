@@ -67,6 +67,15 @@ def update_board_title(board_id, new_title):
         """)
 
 
+def update_card_column(board_id, card_column_id, card_id):
+    data_manager.execute_cud(f"""
+        UPDATE cards
+        SET status_id = '{card_column_id}'
+        WHERE board_id = '{board_id}' AND id = {card_id};
+        """)
+
+
+
 def create_new_board(title):
     data_manager.execute_cud(
         """

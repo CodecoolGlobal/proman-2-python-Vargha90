@@ -59,12 +59,19 @@ def change_board_title(board_id, new_title):
     return jsonify("", render_template("new_title_model.html"), new_title=new_title)
 
 
+@app.route("/save_drag_changes/<board_id>/<card_column_id>/<card_id>", methods=["POST"])
+@json_response
+def save_drag_changes(board_id, card_column_id, card_id):
+    queries.update_card_column(board_id, card_column_id, card_id)
+
+
 def main():
     app.run(debug=True)
 
     # Serving the favicon
     with app.app_context():
         app.add_url_rule('/favicon.ico', redirect_to=url_for('static', filename='favicon/favicon.ico'))
+
 
 
 if __name__ == '__main__':
