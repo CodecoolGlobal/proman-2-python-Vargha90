@@ -5,7 +5,8 @@ import {cardsManager} from "./cardsManager.js";
 
 export let boardsManager = {
     loadBoards: async function () {
-        domManager.addEventListener(".create-board-button","click", createNewBoard)
+        // refresh
+        clearBoards()
         const boards = await dataHandler.getBoards();
         for (let board of boards) {
             const boardBuilder = htmlFactory(htmlTemplates.board);
@@ -25,6 +26,9 @@ export let boardsManager = {
             //domManager.addEventListener()
         }
     },
+    initClick: async function () {
+        domManager.addEventListener(".create-board-button","click", createNewBoard)
+    }
 };
 
 
@@ -111,9 +115,16 @@ function createSaveButton(){
 
 function createNewBoard(){
     const btn = document.getElementById('primary-button')
-    btn.addEventListener('submit', async (e) => {
+    btn.addEventListener('click', async (e) => {
     const title = document.getElementById("board-title").value
-    console.log(title)
-    await dataHandler.createNewBoard(title)
+    await dataHandler.createNewBoard(title).then(r => {return console.log(r)})
+        boardsManager.loadBoards()
 })
+}
+
+function clearBoards(){
+    const boards = document.querySelector(".board-container #root")
+if (boards.hasChildNodes()){
+
+}
 }

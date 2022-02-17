@@ -20,7 +20,8 @@ def index():
 @app.route("/api/boards/new_board", methods=['POST'])
 @json_response
 def create_new_board():
-    title = request.form['board-title']
+    data = request.get_json()
+    title = data['title']
     queries.create_new_board(title)
     response = {'status': 'ok'}
     return response
