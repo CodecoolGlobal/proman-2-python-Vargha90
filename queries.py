@@ -75,6 +75,7 @@ def update_card_column(board_id, card_column_id, card_id):
         """)
 
 
+
 def update_card_title(card_id, new_title):
     data_manager.execute_cud(f"""
         UPDATE cards
@@ -93,3 +94,29 @@ def create_new_board(title):
         """,
         {"title": title}
     )
+
+
+def create_new_user(username, password):
+    data_manager.execute_cud(
+        """
+        INSERT INTO users
+        (username, password)
+        VALUES (
+        %(username)s,
+        %(password)s)
+        """,
+        {'username': username,
+         'password': password}
+    )
+
+
+def get_user_data_by_username(username):
+    users = data_manager.execute_select(
+        """
+        SELECT *
+        FROM users
+        WHERE users.username = %(username)s
+        """,
+        {'username': username}
+    )
+    return users

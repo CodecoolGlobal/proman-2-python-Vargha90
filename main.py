@@ -1,11 +1,16 @@
-from flask import Flask, render_template, url_for, request, redirect, jsonify
+from flask import Flask, render_template, url_for, request, jsonify, session
+import os
 from dotenv import load_dotenv
-from util import json_response, hash_password, verify_password
+
+import util
+from util import json_response
 import mimetypes
 import queries
 
+secret_key = os.urandom(24)
 mimetypes.add_type('application/javascript', '.js')
 app = Flask(__name__)
+app.secret_key = secret_key
 load_dotenv()
 
 
@@ -15,6 +20,62 @@ def index():
     This is a one-pager which shows all the boards and cards
     """
     return render_template('index.html')
+
+
+@app.route("/api/logged")
+@json_response
+def if_logged():
+    if session:
+        username = session['username']
+        user_id = session['user_id']
+        logged_data = {'username': username,
+                       'user_id': user_id,
+                       'logged': 'True'}
+        return logged_data
+    else:
+        session.clear()
+        logged_data = {'logged': 'False'}
+        return logged_data
+
+
+@app.route("/api/login", methods=['POST'])
+@json_response
+def login():
+    data = request.get_json()
+    username = data['username']
+    password = data['password']
+    user_data = queries.get_user_data_by_username(username)
+    if len(user_data) > 0:
+        if username == user_data[0]['username'] and util.verify_password(password, user_data[0]['password']):
+            session['username'] = username
+            session['user_id'] = str(user_data[0]['id'])
+            logged_data = {'logged': 'True',
+                           'username': username,
+                           'user_id': session['user_id']}
+            return logged_data
+        else:
+            logged_data = {'logged': '0'}
+            return logged_data
+    else:
+        logged_data = {'logged': '0'}
+        return logged_data
+
+
+@app.route("/api/logout")
+def logout():
+    session.clear()
+    logged_data = {'logged': 'False'}
+    return logged_data
+
+
+@app.route("/api/register", methods=['POST'])
+@json_response
+def register():
+    data = request.get_json()
+    username = data['username']
+    password = data['password']
+    hashed_password = util.hash_password(password)
+    queries.create_new_user(username, hashed_password)
 
 
 @app.route("/api/boards/new_board", methods=['POST'])
@@ -78,7 +139,6 @@ def main():
     # Serving the favicon
     with app.app_context():
         app.add_url_rule('/favicon.ico', redirect_to=url_for('static', filename='favicon/favicon.ico'))
-
 
 
 if __name__ == '__main__':
