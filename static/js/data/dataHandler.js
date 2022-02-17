@@ -31,6 +31,9 @@ export let dataHandler = {
     },
     register: async function (registerData) {
         return await apiPost("/api/register", registerData)
+    },
+    logout: async function () {
+        return await apiGet("/api/logout")
     }
 };
 

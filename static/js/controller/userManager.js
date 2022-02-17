@@ -3,12 +3,14 @@ import {dataHandler} from "../data/dataHandler.js";
 export function loginRegister() {
     const loginButton = document.querySelector('#login-button');
     const registerButton = document.querySelector('#registration-button');
-    loginButton.addEventListener('click', () => {
-        showModal('Login', false, 'loginModal', 'loginModalTitle');
-    })
+    loginButton.addEventListener('click', loginEvent)
     registerButton.addEventListener('click', () => {
         showModal('Registration', true, 'registerModal', 'registerModalTitle');
     })
+}
+
+function loginEvent() {
+    showModal('Login', false, 'loginModal', 'loginModalTitle');
 }
 
 function showModal(modalTitle, register, modalBoard, title) {
@@ -68,8 +70,12 @@ async function loginUser() {
         'username': document.querySelector('#username').value,
         'password': document.querySelector('#password').value
     }
-    const response = await dataHandler.login(data)
-    console.log(response)
+    const response = await dataHandler.login(data);
+    if (response.logged === 'True') {
+        let loginMessage = document.querySelector('#login-message');
+        loginMessage.innerHTML = `You are logged in as ${response.username}`;
+        changeLoginButton();
+    }
 
 }
 
@@ -79,4 +85,35 @@ async function registerUser() {
         'password': document.querySelector('#password').value
     }
     await dataHandler.register(data);
+}
+
+function changeLoginButton() {
+    let loginButton = document.querySelector('#loginButton');
+    let outerButton = document.querySelector('#login-button');
+    loginButton.removeAttribute('data-toggle');
+    loginButton.removeAttribute('data-target');
+    loginButton.classList.add('logout-button');
+    loginButton.classList.remove('login-button');
+    loginButton.innerHTML = 'Logout';
+    outerButton.removeEventListener('click', loginEvent);
+    outerButton.addEventListener('click', logoutUser);
+}
+
+function changeLogoutButton() {
+    let loginButton = document.querySelector('#loginButton');
+    let outerButton = document.querySelector('#login-button');
+    loginButton.setAttribute('data-toggle', 'modal');
+    loginButton.setAttribute('data-target', '#loginModal');
+    loginButton.classList.add('login-button');
+    loginButton.classList.remove('logout-button');
+    loginButton.innerHTML = 'Login';
+    outerButton.removeEventListener('click', logoutUser);
+    outerButton.addEventListener('click', loginEvent);
+}
+
+async function logoutUser() {
+    await dataHandler.logout();
+    let loginMessage = document.querySelector('#login-message');
+    loginMessage.innerHTML = `You are not logged in :(`;
+    changeLogoutButton()
 }

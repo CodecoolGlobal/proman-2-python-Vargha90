@@ -33,7 +33,7 @@ def login():
         if username == user_data[0]['username'] and util.verify_password(password, user_data[0]['password']):
             session['username'] = username
             session['user_id'] = str(user_data[0]['id'])
-            logged_data = {'logged': '1',
+            logged_data = {'logged': 'True',
                            'username': username,
                            'user_id': session['user_id']}
             return logged_data
@@ -43,6 +43,13 @@ def login():
     else:
         logged_data = {'logged': '0'}
         return logged_data
+
+
+@app.route("/api/logout")
+def logout():
+    session.clear()
+    logged_data = {'logged': 'False'}
+    return logged_data
 
 
 @app.route("/api/register", methods=['POST'])
