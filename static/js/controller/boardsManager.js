@@ -31,10 +31,9 @@ export let boardsManager = {
     }
 };
 
-
 function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
-    if (clickEvent.target.innerText == 'ᐯ'){
+    if (clickEvent.target.innerText === 'ᐯ'){
         cardsManager.loadCards(boardId);
         const column = addColumnButton()
         const list = document.querySelector(".board-header")
@@ -111,7 +110,6 @@ function createSaveButton(){
     saveButton.innerHTML = "Save"
     return saveButton
 }
-
 
 function createNewBoard(){
     const btn = document.getElementById('primary-button')
