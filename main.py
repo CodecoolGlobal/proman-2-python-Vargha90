@@ -1,11 +1,16 @@
-from flask import Flask, render_template, url_for, request, redirect, jsonify
+from flask import Flask, render_template, url_for, request, redirect, jsonify, session
+import os
 from dotenv import load_dotenv
+
+import util
 from util import json_response, hash_password, verify_password
 import mimetypes
 import queries
 
+secret_key = os.urandom(24)
 mimetypes.add_type('application/javascript', '.js')
 app = Flask(__name__)
+app.secret_key = secret_key
 load_dotenv()
 
 
@@ -15,6 +20,34 @@ def index():
     This is a one-pager which shows all the boards and cards
     """
     return render_template('index.html')
+
+
+@app.route("/api/login", methods=['POST'])
+@json_response
+def login():
+    data = request.get_json()
+    username = data['username']
+    password = data['password']
+    user_data = queries.get_user_data_by_username(username)
+    if len(user_data) > 0:
+        if username == user_data[0]['username'] and util.verify_password(password, user_data[0]['password']):
+            session['logged_in'] = True
+            session['username'] = username
+            session['user_id'] = str(user_data[0]['id'])
+        else:
+            print('wrong password')
+    else:
+        print('wrong username')
+
+
+@app.route("/api/register", methods=['POST'])
+@json_response
+def register():
+    data = request.get_json()
+    username = data['username']
+    password = data['password']
+    hashed_password = util.hash_password(password)
+    queries.create_new_user(username, hashed_password)
 
 
 @app.route("/api/boards/new_board", methods=['POST'])

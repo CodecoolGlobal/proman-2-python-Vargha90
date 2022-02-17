@@ -1,3 +1,5 @@
+import {dataHandler} from "../data/dataHandler.js";
+
 export function loginRegister() {
     const loginButton = document.querySelector('#login-button');
     const registerButton = document.querySelector('#registration-button');
@@ -27,7 +29,7 @@ function showModal(modalTitle, register, modalBoard, title) {
                           <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="#" method="post">
+<!--                    <form action="/api/login" method="post">-->
                         <div class="modal-body">
                             <label for="username">Username:</label>
                             <input id="username" type="text" minLength="1" placeholder="John" name="username-field"><br>
@@ -36,18 +38,43 @@ function showModal(modalTitle, register, modalBoard, title) {
                         </div>
                         <div class="modal-footer">
                             <button id="closeButton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="primary-button" data-dismiss="modal">Submit</button>
+                            <button type="button" class="btn btn-primary" id="submitButton" data-dismiss="modal">Submit</button>
                         </div>
-                    </form>
+<!--                    </form>-->
                 </div>
             </div>`;
     body.appendChild(modal);
     const closeIcon = document.querySelector('#closeIcon');
     const closeButton = document.querySelector('#closeButton');
+    const submitButton = document.querySelector('#submitButton')
     closeIcon.addEventListener('click', () => {
         body.removeChild(modal);
     })
     closeButton.addEventListener('click', () => {
         body.removeChild(modal);
     })
+    submitButton.addEventListener('click', () => {
+        if (register === false) {
+            loginUser();
+        } else {
+            registerUser();
+        }
+        body.removeChild(modal);
+    })
+}
+
+async function loginUser() {
+    let data = {
+        'username': document.querySelector('#username').value,
+        'password': document.querySelector('#password').value
+    }
+    await dataHandler.login(data);
+}
+
+async function registerUser() {
+    let data = {
+        'username': document.querySelector('#username').value,
+        'password': document.querySelector('#password').value
+    }
+    await dataHandler.register(data);
 }
