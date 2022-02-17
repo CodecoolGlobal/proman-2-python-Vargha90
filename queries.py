@@ -98,11 +98,12 @@ def create_new_card(board_id, status_id, title):
     data_manager.execute_cud(
         """
         INSERT INTO cards
-        (board_id, status_id, title) 
+        (board_id, status_id, title, card_order) 
         VALUES (
         %(board_id)s,
         %(status_id)s,
-        %(title)s)
+        %(title)s,
+        1)
         """,
         {"board_id": board_id,
          "status_id": status_id,
