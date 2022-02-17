@@ -175,77 +175,77 @@ nav div ul li {
     cursor: pointer;
 }
 
-.modal {
-    row-gap: 15px;
-    column-gap: 15px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    padding-left: 15px;
-    padding-right: 15px;
-    background: rgba(0, 0, 0, 0.5);
-    font-family: sans-serif;
-}
+/*.modal {*/
+/*    row-gap: 15px;*/
+/*    column-gap: 15px;*/
+/*    position: fixed;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 100vw;*/
+/*    height: 100vh;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    box-sizing: border-box;*/
+/*    padding-left: 15px;*/
+/*    padding-right: 15px;*/
+/*    background: rgba(0, 0, 0, 0.5);*/
+/*    font-family: sans-serif;*/
+/*}*/
 
-.inner-modal {
-    background: white;
-    width: 80%;
-    overflow: hidden;
-    border-radius: 4px;
-}
+/*.inner-modal {*/
+/*    background: white;*/
+/*    width: 80%;*/
+/*    overflow: hidden;*/
+/*    border-radius: 4px;*/
+/*}*/
 
-.modal-header {
-    display: flex;
-    align-items: center;
-    background: white;
-}
+/*.modal-header {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    background: white;*/
+/*}*/
 
-.modal-title {
-    flex-grow: 1;
-    padding-left: 15px;
-    padding-right: 15px;
-    font-size: 20px;
-}
+/*.modal-title {*/
+/*    flex-grow: 1;*/
+/*    padding-left: 15px;*/
+/*    padding-right: 15px;*/
+/*    font-size: 20px;*/
+/*}*/
 
-.close-modal {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    padding: 15px;
-    background: none;
-    color: black;
-    border: none;
-    outline: none;
-}
+/*.close-modal {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    cursor: pointer;*/
+/*    padding: 15px;*/
+/*    background: none;*/
+/*    color: black;*/
+/*    border: none;*/
+/*    outline: none;*/
+/*}*/
 
-.submit-form {
-    padding: 15px;
-}
+/*.submit-form {*/
+/*    padding: 15px;*/
+/*}*/
 
-.form-group {
-    width: 40%;;
-}
+/*.form-group {*/
+/*    width: 40%;;*/
+/*}*/
 
-.form-control {
-    margin-left: 20px;
-    margin-top: 15px;
-    border-radius: 4px;
-}
+/*.form-control {*/
+/*    margin-left: 20px;*/
+/*    margin-top: 15px;*/
+/*    border-radius: 4px;*/
+/*}*/
 
-.submit-button {
-    border-radius: 4px;
-    margin-left: 90%;
-    margin-top: 15px;
-    padding: 10px;
-    background-color: cornflowerblue;
-    font-weight: bold;
-}
+/*.submit-button {*/
+/*    border-radius: 4px;*/
+/*    margin-left: 90%;*/
+/*    margin-top: 15px;*/
+/*    padding: 10px;*/
+/*    background-color: cornflowerblue;*/
+/*    font-weight: bold;*/
+/*}*/
 
 /* Drag 'N Drop - Roland */
 

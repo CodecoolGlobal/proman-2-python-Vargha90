@@ -1,5 +1,5 @@
 import {dataHandler} from "../data/dataHandler.js";
-import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
+import {htmlFactory, htmlTemplates, addColumnButton} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 import {cardsManager} from "./cardsManager.js";
 
@@ -32,10 +32,16 @@ function showHideButtonHandler(clickEvent) {
     const boardId = clickEvent.target.dataset.boardId;
     if (clickEvent.target.innerText == 'ᐯ'){
         cardsManager.loadCards(boardId);
+        const column = addColumnButton()
+        const list = document.querySelector(".board-header")
+        clickEvent.target.insertAdjacentHTML('afterend', column)
+        console.log(list)
         clickEvent.target.innerHTML = '&#5169;';
     }
     else {
         cardsManager.hideCards(boardId);
+        document.getElementById('add-column').remove()
+        document.getElementById('add-card').remove()
         clickEvent.target.innerHTML = 'ᐯ';
     }
 
@@ -105,7 +111,7 @@ function createSaveButton(){
 
 function createNewBoard(){
     const btn = document.getElementById('primary-button')
-    btn.addEventListener('click', async (e) => {
+    btn.addEventListener('submit', async (e) => {
     const title = document.getElementById("board-title").value
     console.log(title)
     await dataHandler.createNewBoard(title)

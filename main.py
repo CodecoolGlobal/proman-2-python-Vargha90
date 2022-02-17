@@ -17,12 +17,13 @@ def index():
     return render_template('index.html')
 
 
-@app.route("/api/boards/new_board")
+@app.route("/api/boards/new_board", methods=['POST'])
 @json_response
 def create_new_board():
-    print('ok')
-    # queries.create_new_board()
-    pass
+    title = request.form['board-title']
+    queries.create_new_board(title)
+    response = {'status': 'ok'}
+    return response
 
 
 @app.route("/api/boards")

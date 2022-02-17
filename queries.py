@@ -66,6 +66,7 @@ def update_board_title(board_id, new_title):
         WHERE id = '{board_id}';
         """)
 
+
 def create_new_board(title):
     data_manager.execute_cud(
         """
@@ -75,4 +76,3 @@ def create_new_board(title):
         """,
         {"title": title}
     )
-
