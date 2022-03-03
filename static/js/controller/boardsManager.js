@@ -13,11 +13,12 @@ export let boardsManager = {
         for (let board of boards) {
             const boardBuilder = htmlFactory(htmlTemplates.board);
             const content = boardBuilder(board);
+            let baseTitle = board.title
             domManager.addChild("#root", content);
             domManager.addEventListener(
             `.board-title[data-board-id="${board.id}"]`,
-            "input",
-            ()=>{saveBoardTitleChange(board.id)}
+            "keydown",
+            ()=>{saveBoardTitleChange(board.id, baseTitle)}
             );
             domManager.addEventListener(
                 `.board-toggle[data-board-id="${board.id}"]`,
@@ -82,15 +83,14 @@ function limitTitleLength(boardId){
 
 
 function saveBoardTitleChange(boardId) {
-     if(document.body.contains(document.querySelector('.saveButton'))){
-         deleteExistingButton()
-     }
+    deleteExistingButton()
     limitTitleLength(boardId)
     let board = document.querySelector(`.board-header[data-board-id="${boardId}"]`)
-    let newTitle = document.querySelector(`.board-title[data-board-id="${boardId}"]`).innerHTML
     let saveButton = createSaveButton()
+
     board.appendChild(saveButton)
     saveButton.addEventListener("click",()=>{
+        let newTitle = document.querySelector(`.board-title[data-board-id="${boardId}"]`).innerHTML
         changeTitleAjax(boardId, newTitle)
     })
 }
@@ -110,8 +110,9 @@ function changeTitleAjax(boardId, newTitle){
 
 
 function deleteExistingButton(){
-    let saveButton = document.querySelector(".saveButton")
-    saveButton.remove()
+    if(document.body.contains(document.querySelector('.saveButton'))) {
+        document.querySelector(".saveButton").remove()
+    }
 }
 
 

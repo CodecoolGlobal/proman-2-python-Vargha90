@@ -124,10 +124,9 @@ def get_statuses():
 
 
 @app.route("/change_board_title/<int:board_id>/<new_title>", methods=["POST"])
-@json_response
 def change_board_title(board_id, new_title):
     queries.update_board_title(board_id, new_title)
-    return jsonify("", render_template("new_title_model.html"), new_title=new_title)
+    return jsonify({'new_title': render_template("new_title_model.html", new_title=new_title, board_id=board_id)})
 
 
 @app.route("/save_drag_changes/<board_id>/<card_column_id>/<card_id>", methods=["POST"])

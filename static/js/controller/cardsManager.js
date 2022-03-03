@@ -43,27 +43,44 @@ function DragAndDrop()  {
     const containers = document.querySelectorAll('.board-column-content');
     cards.forEach(draggable => {
         draggable.addEventListener('dragstart', () => {
-            console.log('DragStart')
             draggable.classList.add('dragging')
         })
 
         draggable.addEventListener('dragend', () => {
-            console.log('DragEnd')
             draggable.classList.remove('dragging')
         })
     })
 
     containers.forEach(container => {
         container.addEventListener('dragover', e => {
-            console.log('DragOver')
             e.preventDefault()
+            const afterElement = getDragAfterElement(container, e.clientY)
             const draggable = document.querySelector('.dragging')
-            container.appendChild(draggable)
+            if (afterElement == null){
+                container.appendChild(draggable)
+            } else {
+                container.insertBefore(draggable, afterElement)
+            }
             changeColumnAttr(container, draggable)
             saveDragChanges(container, draggable)
         })
     })
 }
+
+function getDragAfterElement(container, y){
+    const draggableElements = [...container.querySelectorAll('.card:not(.dragging)')]
+    return draggableElements.reduce((closest, child) =>{
+        const box = child.getBoundingClientRect()
+        const offset = y -box.top - box.height / 2
+        if (offset < 0 && offset > closest.offset){
+            return {offset: offset, element: child}
+        }
+        else{
+            return closest
+        }
+    }, {offset: Number.NEGATIVE_INFINITY}).element
+}
+
 
 function changeColumnAttr(container, draggable){
     let column = container.getAttribute("column")
@@ -95,7 +112,7 @@ function changeCardTitle(cardId){
     else if(event.keyCode === 27){
         onEscape(card, base_value)
     }
-    detectClickOutside(card, base_value)
+    detectClickOutside(event, card, cardId)
    });
 }
 
@@ -111,14 +128,14 @@ function onEscape(card, base_value){
     card.innerText =  base_value
 }
 
-function detectClickOutside(card, base_value){
+function detectClickOutside(event, card, cardId){
     jQuery(function($){
         $(card).click(function(e){
         e.stopPropagation();
         });
     $(document).click(function() {
         card.blur()
-        card.innerText =  base_value
+        onEnter(event, card, cardId)
       });
     });
 }
