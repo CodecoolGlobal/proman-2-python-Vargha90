@@ -1,12 +1,11 @@
-import { dom } from "./dom.js";
+import {boardsManager} from "./controller/boardsManager.js";
+import {loginRegister} from "./controller/userManager.js"
 
-// This function is to initialize the application
 function init() {
-    // init data
-    dom.init();
-    // loads the boards to the screen
-    dom.loadBoards();
-
+    boardsManager.boardButton()
+    boardsManager.loadBoards();
+    // boardsManager.cardButton()
+    // loginRegister();
 }
 
 init();
